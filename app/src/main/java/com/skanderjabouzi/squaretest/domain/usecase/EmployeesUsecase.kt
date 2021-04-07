@@ -1,5 +1,6 @@
 package com.skanderjabouzi.squaretest.domain.usecase
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.skanderjabouzi.squaretest.data.model.Employee
 import com.skanderjabouzi.squaretest.data.model.Employees
@@ -16,17 +17,22 @@ class EmployeesUsecase @Inject constructor(
     val error = MutableLiveData<String>()
 
     suspend fun getEmployeesList() {
-        getRequestFromApi(employeesRepository.getEmployeesList())?.let {
-            when(it) {
-                is ResultState.Success -> {
-                    val employees = (it.data as Employees).employees
-                    employees?.let {
-                        employessList.postValue(it)
+        try {
+            getRequestFromApi(employeesRepository.getEmployeesList())?.let {
+                when(it) {
+                    is ResultState.Success -> {
+                        val employees = (it.data as Employees).employees
+                        employees?.let {
+                            employessList.postValue(it)
+                        }
                     }
+                    else -> error.postValue((it as ResultState.Error).error)
                 }
-                else -> error.postValue((it as ResultState.Error).error)
             }
+        } catch (e: Exception) {
+            error.postValue(e.localizedMessage)
         }
+
     }
 
     private fun getRequestFromApi(response: Response<*>): ResultState? {

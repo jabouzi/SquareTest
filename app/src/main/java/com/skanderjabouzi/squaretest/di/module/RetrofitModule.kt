@@ -1,6 +1,5 @@
 package com.skanderjabouzi.squaretest.di.module
 
-import com.google.gson.GsonBuilder
 import com.skanderjabouzi.squaretest.core.Conf
 import com.skanderjabouzi.squaretest.di.score.AppScope
 import dagger.Module
@@ -8,30 +7,17 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 
 
 @Module
 class RetrofitModule {
-    @AppScope
-    @Provides
-    fun provideHttpLogginInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
-
-    @AppScope
-    @Provides
-    fun provideGsonFactory(): GsonConverterFactory {
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
-        return GsonConverterFactory.create(gson)
-    }
 
     @AppScope
     @Provides
     fun providesOkHttpClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(logging)
         return builder.build()
@@ -39,10 +25,10 @@ class RetrofitModule {
 
     @AppScope
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, gsonFactory: GsonConverterFactory): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
                 .baseUrl(Conf.baseUrl)
-                .addConverterFactory(gsonFactory)
+                .addConverterFactory(JacksonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
 

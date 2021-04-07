@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#4D4D4D</color>
+    <color name="colorPrimaryDark">#323232</color>
+    <color name="colorAccent">#BFBFBF</color>
+    <color name="spashColor">#000000</color>
+    <color name="cardText">#FFFFFF</color>
+    <color name="cardBackground">#000000</color>
+</resources>

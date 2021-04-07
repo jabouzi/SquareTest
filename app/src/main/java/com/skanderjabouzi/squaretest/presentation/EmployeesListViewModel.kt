@@ -1,5 +1,6 @@
 package com.skanderjabouzi.squaretest.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skanderjabouzi.squaretest.domain.usecase.EmployeesUsecase

@@ -10,5 +10,5 @@ class EmployeesRepository @Inject constructor() {
 
     @set:Inject var retrofitClient: RetrofitClient = App.INSTANCE.appComponent.getRetrofitClient()
 
-    suspend fun getEmployeesList(): Response<Employees> = retrofitClient.getEmployees()
+    suspend fun getEmployeesList(): Response<Employees> = retrofitClient.getMalformedEmployees()
 }

@@ -9,7 +9,6 @@ import dagger.Subcomponent
 
 @FragmentScope
 @Subcomponent(modules = [EmployeesListViewModelModule::class,
-    EmployeesListAdapterModule::class,
     ViewModelFactoryModule::class])
 interface EmployeesLIstFragmentComponent {
     fun inject(fragment: EmployeesListFragment)

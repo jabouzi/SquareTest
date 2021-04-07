@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CardView.Light"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    android:theme="@style/EmployeeCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,28 +15,25 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="H,16:9"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/placeholder"
+            app:layout_constraintEnd_toStartOf="@+id/full_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/full_name"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/full_name"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            app:layout_constraintTop_toBottomOf="@+id/image"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/zero"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/contact" />
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Skander Jabouzi"/>
 
         <TextView
             android:id="@+id/contact"
@@ -44,11 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintTop_toBottomOf="@+id/full_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/team" />
+            app:layout_constraintBottom_toTopOf="@+id/team"
+            tools:text="514-555-2222 - aaa@aaa.com"/>
 
         <TextView
             android:id="@+id/team"
@@ -59,10 +56,10 @@
             android:minWidth="0dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:textColor="#DE000000"
             app:layout_constraintTop_toBottomOf="@+id/contact"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/biography" />
+            app:layout_constraintBottom_toTopOf="@+id/biography"
+            tools:text="Team"/>
 
         <TextView
             android:id="@+id/type"
@@ -72,9 +69,10 @@
             android:minWidth="0dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:textColor="#DE000000"
-            app:layout_constraintTop_toTopOf="@+id/biography"
-            app:layout_constraintStart_toEndOf="@+id/team" />
+            app:layout_constraintTop_toBottomOf="@+id/contact"
+            app:layout_constraintBottom_toTopOf="@+id/biography"
+            app:layout_constraintStart_toEndOf="@+id/team"
+            tools:text="Type"/>
 
         <TextView
             android:id="@+id/biography"
@@ -85,12 +83,11 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:lineSpacingExtra="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#DE000000"
-            app:layout_constraintTop_toBottomOf="@+id/contact"
+            app:layout_constraintTop_toBottomOf="@+id/team"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Biography"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

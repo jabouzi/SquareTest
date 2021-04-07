@@ -8,9 +8,9 @@ interface EmployeesApi {
     @GET("employees.json")
     suspend fun getEmployees(): Response<Employees>
 
-    @GET("employees_malformed.json.json")
+    @GET("employees_malformed.json")
     suspend fun getMalformedEmployees():  Response<Employees>
 
-    @GET("employees_empty.json.json")
+    @GET("employees_empty.json")
     suspend fun getEmptyEmployees():  Response<Employees>
 }

@@ -1,16 +1,21 @@
 package com.skanderjabouzi.squaretest.presentation
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.skanderjabouzi.squaretest.R
@@ -25,20 +30,24 @@ class EmployeesListFragment : Fragment() {
     lateinit var adapter: EmployeesListAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var employeesListFragmentBinding: EmployeesListFragmentBinding
-    private lateinit var viewModel: EmployeesListViewModel
+    private lateinit var binding: EmployeesListFragmentBinding
+    lateinit var viewModel:EmployeesListViewModel
 
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true // <--------- the fragment retain his configuration
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        employeesListFragmentBinding = EmployeesListFragmentBinding.inflate(inflater, container, false)
-        return employeesListFragmentBinding.root
+    ): View {
+        binding = EmployeesListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
-        (context as App).appComponent
+        (context.applicationContext as App).appComponent
             .getEmployeesLIstFragmentComponent()
             .inject(this)
         super.onAttach(context)
@@ -47,13 +56,13 @@ class EmployeesListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
-
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         view?.findViewById<Toolbar>(R.id.toolbar)
             ?.setupWithNavController(navController, appBarConfiguration)
 
-        employeesListFragmentBinding.toolbarView.toolbarTitle.text = getString(R.string.employees_list)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.employees_list)
+        binding.employeesRecyclerView.adapter = adapter
 
         observeEmployees()
         observeErrors()
@@ -64,19 +73,36 @@ class EmployeesListFragment : Fragment() {
         viewModel.getEmployeesList()
     }
 
-    private fun observeErrors() {
+    private fun observeEmployees() {
         viewModel.employees.observe(viewLifecycleOwner, Observer { employees ->
             hideLoading()
-            adapter.setEmployees(employees)
+            if (employees.isEmpty()) {
+                showMessage(getString(R.string.list_empty))
+            } else {
+                adapter.setEmployees(employees)
+            }
+        })
+    }
+
+    private fun observeErrors() {
+        viewModel.error.observe(viewLifecycleOwner, Observer { errorMessage ->
+            hideLoading()
+            showMessage(errorMessage)
         })
     }
 
     private fun hideLoading() {
-        TODO("Not yet implemented")
+        binding.employeesRecyclerView.isEnabled = true
+        binding.employeesProgressBar.isVisible = false
     }
 
-    private fun observeEmployees() {
-        TODO("Not yet implemented")
+    private fun showMessage(errorMessage: String) {
+        if (errorMessage.isNotEmpty()) {
+            binding.employeesRetryButton.isVisible = true
+            binding.employeesErroMessage.apply {
+                isVisible = true
+                text = errorMessage
+            }
+        }
     }
-
 }
