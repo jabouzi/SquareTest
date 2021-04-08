@@ -39,7 +39,6 @@ class EmployeesListViewModelTest: BaseTest() {
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.initMocks(this)
-        viewModel = EmployeesListViewModel(usecase)
     }
 
     @After
@@ -52,7 +51,7 @@ class EmployeesListViewModelTest: BaseTest() {
     fun `run getEmployeesList not null and validate response`() {
         runBlocking {
             doReturn(fullEmployees).whenever(usecase).getEmployeesList()
-            viewModel.getEmployeesList()
+            viewModel = EmployeesListViewModel(usecase)
             Assert.assertThat(
                 LiveDataTestUtil.getValue(viewModel.employees), Is.`is`(((fullEmployees as ResultState.Success).data as Employees).employees)
             )
@@ -64,7 +63,7 @@ class EmployeesListViewModelTest: BaseTest() {
     fun `run getEmptyEmployeesList not null and validate response`() {
         runBlocking {
             doReturn(emptyEmployees).whenever(usecase).getEmployeesList()
-            viewModel.getEmployeesList()
+            viewModel = EmployeesListViewModel(usecase)
             Assert.assertThat(
                 LiveDataTestUtil.getValue(viewModel.employees), Is.`is`(((emptyEmployees as ResultState.Success).data as Employees).employees)
             )
@@ -76,7 +75,7 @@ class EmployeesListViewModelTest: BaseTest() {
     fun `run getMalformedEmployeesList not null and validate response`() {
         runBlocking {
             doReturn(malformedEmployees).whenever(usecase).getEmployeesList()
-            viewModel.getEmployeesList()
+            viewModel = EmployeesListViewModel(usecase)
             Assert.assertThat(
                 LiveDataTestUtil.getValue(viewModel.error), Is.`is`((malformedEmployees as ResultState.Error).error)
             )
