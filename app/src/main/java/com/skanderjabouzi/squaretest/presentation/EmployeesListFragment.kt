@@ -39,7 +39,7 @@ class EmployeesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = EmployeesListFragmentBinding.inflate(inflater)
+        binding = EmployeesListFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
         binding.employeesRecyclerView.adapter = adapter
 
