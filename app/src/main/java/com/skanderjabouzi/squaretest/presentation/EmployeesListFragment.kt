@@ -55,9 +55,6 @@ class EmployeesListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        view?.findViewById<Toolbar>(R.id.toolbar)
-            ?.setupWithNavController(navController, appBarConfiguration)
-
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.employees_list)
         binding.employeesRecyclerView.adapter = adapter
 
