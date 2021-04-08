@@ -1,4 +1,4 @@
-package com.skanderjabouzi.nbateamviewer.di.modules
+package com.skanderjabouzi.squaretest.di.modules
 
 import androidx.lifecycle.ViewModelProvider
 import com.skanderjabouzi.squaretest.utils.ViewModelFactory

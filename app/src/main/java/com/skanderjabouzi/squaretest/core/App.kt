@@ -8,7 +8,7 @@ import com.skanderjabouzi.squaretest.di.component.AppComponent
 import com.skanderjabouzi.squaretest.di.component.DaggerAppComponent
 import okhttp3.OkHttpClient
 
-class App: Application(), ImageLoaderFactory {
+open class App: Application(), ImageLoaderFactory {
 
     val appComponent: AppComponent by lazy { initDagger() }
 
@@ -35,6 +35,8 @@ class App: Application(), ImageLoaderFactory {
             }
             .build()
     }
+
+    open fun getBaseUrl() = "https://s3.amazonaws.com/sq-mobile-interview/"
 
     companion object {
         lateinit var INSTANCE: App

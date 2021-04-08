@@ -2,7 +2,6 @@ package com.skanderjabouzi.squaretest.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.skanderjabouzi.squaretest.R
@@ -35,7 +32,7 @@ class EmployeesListFragment : Fragment() {
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true // <--------- the fragment retain his configuration
+        retainInstance = true
     }
 
     override fun onCreateView(
@@ -70,6 +67,7 @@ class EmployeesListFragment : Fragment() {
     }
 
     private fun getEmployees() {
+        showLoading()
         viewModel.getEmployeesList()
     }
 
@@ -91,14 +89,25 @@ class EmployeesListFragment : Fragment() {
         })
     }
 
+    private fun showLoading() {
+        binding.employeesRecyclerView.visibility = View.GONE
+        binding.employeesProgressBar.visibility = View.VISIBLE
+        binding.employeesRetryButton.visibility = View.GONE
+        binding.employeesErroMessage.visibility = View.GONE
+    }
+
     private fun hideLoading() {
-        binding.employeesRecyclerView.isEnabled = true
-        binding.employeesProgressBar.isVisible = false
+        binding.employeesRecyclerView.visibility = View.VISIBLE
+        binding.employeesProgressBar.visibility = View.GONE
+        binding.employeesRetryButton.visibility = View.GONE
+        binding.employeesErroMessage.visibility = View.GONE
     }
 
     private fun showMessage(errorMessage: String) {
         if (errorMessage.isNotEmpty()) {
-            binding.employeesRetryButton.isVisible = true
+            binding.employeesRecyclerView.visibility = View.GONE
+            binding.employeesProgressBar.visibility = View.GONE
+            binding.employeesRetryButton.visibility = View.VISIBLE
             binding.employeesErroMessage.apply {
                 isVisible = true
                 text = errorMessage

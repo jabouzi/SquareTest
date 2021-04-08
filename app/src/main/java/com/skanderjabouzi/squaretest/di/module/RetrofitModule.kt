@@ -1,6 +1,6 @@
 package com.skanderjabouzi.squaretest.di.module
 
-import com.skanderjabouzi.squaretest.core.Conf
+import com.skanderjabouzi.squaretest.core.App
 import com.skanderjabouzi.squaretest.di.score.AppScope
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ class RetrofitModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
-                .baseUrl(Conf.baseUrl)
+                .baseUrl(App.INSTANCE.getBaseUrl())
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

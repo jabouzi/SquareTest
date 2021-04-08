@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class RetrofitClient @Inject constructor(val retrofit: Retrofit) {
+class RetrofitClient @Inject constructor(private val retrofit: Retrofit) {
 
     private val employeesApi: EmployeesApi
 

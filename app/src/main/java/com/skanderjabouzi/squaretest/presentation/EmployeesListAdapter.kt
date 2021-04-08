@@ -1,6 +1,5 @@
 package com.skanderjabouzi.squaretest.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +17,9 @@ class EmployeesListAdapter @Inject constructor() :
 
     private var employees = mutableListOf<Employee>()
     private lateinit var imageLoader: ImageLoader
+    lateinit var itemBinding: EmployeesListItemBinding
 
-    inner class EmployeesViewHolder(private val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class EmployeesViewHolder(val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(employee: Employee) {
             itemBinding.fullName.text = employee.full_name
             itemBinding.biography.text = employee.biography
@@ -36,7 +36,7 @@ class EmployeesListAdapter @Inject constructor() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeesViewHolder {
-        val itemBinding = EmployeesListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        itemBinding = EmployeesListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         imageLoader = ImageLoader(parent.context)
         Coil.setImageLoader(imageLoader)
         return EmployeesViewHolder(itemBinding)

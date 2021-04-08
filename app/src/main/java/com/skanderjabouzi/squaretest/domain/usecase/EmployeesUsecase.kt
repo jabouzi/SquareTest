@@ -1,8 +1,5 @@
 package com.skanderjabouzi.squaretest.domain.usecase
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.skanderjabouzi.squaretest.data.model.Employee
 import com.skanderjabouzi.squaretest.data.model.Employees
 import com.skanderjabouzi.squaretest.domain.gateway.EmployeesRepository
 import com.skanderjabouzi.squaretest.utils.ResultState
@@ -13,29 +10,18 @@ import javax.inject.Inject
 class EmployeesUsecase @Inject constructor(
     val employeesRepository: EmployeesRepository) {
 
-    val employessList = MutableLiveData<List<Employee>>()
-    val error = MutableLiveData<String>()
-
-    suspend fun getEmployeesList() {
+    suspend fun getEmployeesList(): ResultState {
         try {
             getRequestFromApi(employeesRepository.getEmployeesList())?.let {
-                when(it) {
-                    is ResultState.Success -> {
-                        val employees = (it.data as Employees).employees
-                        employees?.let {
-                            employessList.postValue(it)
-                        }
-                    }
-                    else -> error.postValue((it as ResultState.Error).error)
-                }
+                return it
             }
         } catch (e: Exception) {
-            error.postValue(e.localizedMessage)
+           return ResultState.Error(e.localizedMessage)
         }
-
+        return ResultState.Unknown()
     }
 
-    private fun getRequestFromApi(response: Response<*>): ResultState? {
+    private fun getRequestFromApi(response: Response<Employees>): ResultState? {
         return try {
             if (response.isSuccessful) {
                 response.body()?.let { ResultState.Success(it) }

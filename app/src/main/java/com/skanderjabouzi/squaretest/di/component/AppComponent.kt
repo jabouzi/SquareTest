@@ -1,7 +1,6 @@
 package com.skanderjabouzi.squaretest.di.component
 
 import android.content.Context
-import androidx.lifecycle.SavedStateHandle
 import com.skanderjabouzi.squaretest.data.net.RetrofitClient
 import com.skanderjabouzi.squaretest.di.module.RetrofitModule
 import com.skanderjabouzi.squaretest.di.score.AppScope
