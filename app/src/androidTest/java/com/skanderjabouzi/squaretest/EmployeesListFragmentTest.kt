@@ -20,12 +20,9 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import java.util.concurrent.TimeUnit
 
 
-@RunWith(RobolectricTestRunner::class)
 class EmployeesListFragmentTest {
 
     private val mockWebServer = MockWebServer()
