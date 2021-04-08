@@ -39,7 +39,12 @@ class EmployeesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = EmployeesListFragmentBinding.inflate(inflater, container, false)
+        binding = EmployeesListFragmentBinding.inflate(inflater)
+        viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
+        binding.employeesRecyclerView.adapter = adapter
+
+        observeEmployees()
+        observeErrors()
         return binding.root
     }
 
@@ -52,15 +57,9 @@ class EmployeesListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.employees_list)
-        binding.employeesRecyclerView.adapter = adapter
-
-        observeEmployees()
-        observeErrors()
-        getEmployees()
     }
 
     private fun getEmployees() {

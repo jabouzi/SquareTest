@@ -14,6 +14,10 @@ class EmployeesListViewModel @Inject constructor(val usecase: EmployeesUsecase) 
     val employees = MutableLiveData<List<Employee>>()
     val error = MutableLiveData<String>()
 
+    init {
+        getEmployeesList()
+    }
+
     fun getEmployeesList() {
         viewModelScope.launch {
             val result = usecase.getEmployeesList()
