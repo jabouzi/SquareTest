@@ -42,7 +42,9 @@ class EmployeesListFragment : Fragment() {
         binding = EmployeesListFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, viewModelFactory)[EmployeesListViewModel::class.java]
         binding.employeesRecyclerView.adapter = adapter
-
+        binding.employeesRetryButton.setOnClickListener {
+            getEmployees()
+        }
         observeEmployees()
         observeErrors()
         return binding.root
@@ -64,7 +66,7 @@ class EmployeesListFragment : Fragment() {
 
     private fun getEmployees() {
         showLoading()
-        viewModel.getEmployeesList()
+        viewModel.reload()
     }
 
     private fun observeEmployees() {

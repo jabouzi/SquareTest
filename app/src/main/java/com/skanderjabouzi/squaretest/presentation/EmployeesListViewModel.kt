@@ -1,5 +1,7 @@
 package com.skanderjabouzi.squaretest.presentation
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,22 +13,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EmployeesListViewModel @Inject constructor(val usecase: EmployeesUsecase) : ViewModel() {
-    val employees = MutableLiveData<List<Employee>>()
-    val error = MutableLiveData<String>()
+    private val _employees = MutableLiveData<List<Employee>>()
+    private val _error = MutableLiveData<String>()
+
+    val employees: LiveData<List<Employee>>
+            get() = _employees
+
+    val error: LiveData<String>
+        get() = _error
 
     init {
         getEmployeesList()
     }
 
-    fun getEmployeesList() {
+    fun reload() {
+        getEmployeesList()
+    }
+
+    private fun getEmployeesList() {
         viewModelScope.launch {
             val result = usecase.getEmployeesList()
 
             when(result) {
                 is ResultState.Success -> {
-                    employees.postValue((result.data as Employees).employees)
+                    _employees.value = (result.data as Employees).employees
+                    _error.value = ""
                 }
-                else -> error.postValue((result as ResultState.Error).error)
+                else -> {
+                    _employees.value = ArrayList()
+                    _error.value = (result as ResultState.Error).error
+                }
             }
         }
     }
