@@ -26,12 +26,11 @@ class RetrofitModule {
     @AppScope
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        val retrofit = Retrofit.Builder()
-                .baseUrl(App.INSTANCE.getBaseUrl())
-                .addConverterFactory(JacksonConverterFactory.create())
-                .client(okHttpClient)
-                .build()
 
-        return retrofit
+        return Retrofit.Builder()
+            .baseUrl(App.INSTANCE.getBaseUrl())
+            .addConverterFactory(JacksonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 }

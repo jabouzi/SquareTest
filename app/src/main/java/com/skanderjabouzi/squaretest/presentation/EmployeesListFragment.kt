@@ -7,14 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.skanderjabouzi.squaretest.R
 import com.skanderjabouzi.squaretest.core.App
 import com.skanderjabouzi.squaretest.databinding.EmployeesListFragmentBinding
@@ -28,7 +23,7 @@ class EmployeesListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: EmployeesListFragmentBinding
-    lateinit var viewModel:EmployeesListViewModel
+    private lateinit var viewModel:EmployeesListViewModel
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +54,6 @@ class EmployeesListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.employees_list)
     }
 
@@ -70,7 +63,7 @@ class EmployeesListFragment : Fragment() {
     }
 
     private fun observeEmployees() {
-        viewModel.employees.observe(viewLifecycleOwner, Observer { employees ->
+        viewModel.employees.observe(viewLifecycleOwner, { employees ->
             hideLoading()
             if (employees.isEmpty()) {
                 showMessage(getString(R.string.list_empty))
@@ -81,7 +74,7 @@ class EmployeesListFragment : Fragment() {
     }
 
     private fun observeErrors() {
-        viewModel.error.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.error.observe(viewLifecycleOwner, { errorMessage ->
             hideLoading()
             showMessage(errorMessage)
         })

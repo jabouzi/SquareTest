@@ -8,7 +8,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class EmployeesUsecase @Inject constructor(
-    val employeesRepository: EmployeesRepository) {
+    private val employeesRepository: EmployeesRepository) {
 
     suspend fun getEmployeesList(): ResultState {
         try {

@@ -6,23 +6,21 @@ import coil.ImageLoaderFactory
 import coil.util.CoilUtils
 import com.skanderjabouzi.squaretest.di.component.AppComponent
 import com.skanderjabouzi.squaretest.di.component.DaggerAppComponent
+import io.github.asvid.firstlib.FirstLibObject
 import okhttp3.OkHttpClient
 
 open class App: Application(), ImageLoaderFactory {
 
     val appComponent: AppComponent by lazy { initDagger() }
 
-    init {
-        INSTANCE = this
-    }
-
     private fun initDagger(): AppComponent {
-        val component = DaggerAppComponent.factory().create(this)
-        return component
+        return DaggerAppComponent.factory().create(this)
     }
 
     override fun onCreate() {
         super.onCreate()
+        INSTANCE = this
+        println(FirstLibObject.someMethd())
     }
 
     override fun newImageLoader(): ImageLoader {
@@ -40,5 +38,6 @@ open class App: Application(), ImageLoaderFactory {
 
     companion object {
         lateinit var INSTANCE: App
+            private set
     }
 }
