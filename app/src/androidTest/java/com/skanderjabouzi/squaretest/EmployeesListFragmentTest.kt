@@ -28,7 +28,7 @@ class EmployeesListFragmentTest {
     private val mockWebServer = MockWebServer()
 
     lateinit var activityScenario: ActivityScenario<MainActivity>
-    val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
     val intent = Intent(appContext, MainActivity::class.java)
     private val employeesRobot: EmployeesRobot by lazy {
         EmployeesRobot()
@@ -59,7 +59,7 @@ class EmployeesListFragmentTest {
             }
         }
 
-        activityScenario = ActivityScenario.launch<MainActivity>(intent)
+        activityScenario = ActivityScenario.launch(intent)
         onView(isAssignableFrom(ProgressBar::class.java)).perform(replaceProgressBarDrawable())
         onView(withId(R.id.employeesProgressBar))
                 .check(ViewAssertions.matches(withEffectiveVisibility(Visibility.GONE)))
@@ -79,7 +79,7 @@ class EmployeesListFragmentTest {
             }
         }
 
-        activityScenario = ActivityScenario.launch<MainActivity>(intent)
+        activityScenario = ActivityScenario.launch(intent)
 
         onView(withId(R.id.employeesProgressBar))
                 .check(ViewAssertions.matches(withEffectiveVisibility(Visibility.GONE)))
@@ -99,7 +99,7 @@ class EmployeesListFragmentTest {
             }
         }
 
-        activityScenario = ActivityScenario.launch<MainActivity>(intent)
+        activityScenario = ActivityScenario.launch(intent)
 
         onView(withId(R.id.employeesProgressBar))
                 .check(ViewAssertions.matches(withEffectiveVisibility(Visibility.GONE)))
@@ -117,7 +117,7 @@ class EmployeesListFragmentTest {
             }
         }
 
-        activityScenario = ActivityScenario.launch<MainActivity>(intent)
+        activityScenario = ActivityScenario.launch(intent)
 
         onView(withId(R.id.employeesProgressBar))
                 .check(ViewAssertions.matches(withEffectiveVisibility(Visibility.GONE)))
@@ -137,7 +137,7 @@ class EmployeesListFragmentTest {
             }
         }
 
-        activityScenario = ActivityScenario.launch<MainActivity>(intent)
+        activityScenario = ActivityScenario.launch(intent)
         onView(isAssignableFrom(ProgressBar::class.java)).perform(replaceProgressBarDrawable())
         employeesRobot.verifyEmployeesListTitlesAreDisplayed()
         employeesRobot.verifyEmployeeItemContactHasText(0, "5553280123 - jmason.demo@squareup.com")

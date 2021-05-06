@@ -680,7 +680,7 @@ fun <T : Activity> ActivityTestRule<T>.waitOnMainThread(
     MatcherAssert.assertThat(
         "Waiting timed out, callback was never invoked.",
         latch.await(duration, timeUnit),
-        CoreMatchers.`is`(true)
+        `is`(true)
     )
 
 }
