@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">SquareTest</string>
-    <string name="title_activity_splash">SplashActivity</string>
     <string name="employees_list">Employees List</string>
     <string name="error_occured">An error occurred.</string>
     <string name="list_empty">No employee found.</string>
     <string name="retry">Retry again</string>
-    <string name="bad_data">One or many malformed employees data received</string>
+    <string name="contact_text">Phone: %s - Address: %s</string>
 </resources>

@@ -5,13 +5,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class RetrofitClient @Inject constructor(private val retrofit: Retrofit) {
+class RetrofitClient @Inject constructor(retrofit: Retrofit) {
 
-    private val employeesApi: EmployeesApi
-
-    init {
-        employeesApi = retrofit.create(EmployeesApi::class.java)
-    }
+    private val employeesApi: EmployeesApi = retrofit.create(EmployeesApi::class.java)
 
     suspend fun getEmployees(): Response<Employees> {
         return employeesApi.getEmployees()

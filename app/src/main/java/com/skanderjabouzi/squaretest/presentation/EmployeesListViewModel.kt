@@ -1,6 +1,5 @@
 package com.skanderjabouzi.squaretest.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,7 @@ import com.skanderjabouzi.squaretest.utils.ResultState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EmployeesListViewModel @Inject constructor(val usecase: EmployeesUsecase) : ViewModel() {
+class EmployeesListViewModel @Inject constructor(private val usecase: EmployeesUsecase) : ViewModel() {
     private val _employees = MutableLiveData<List<Employee>>()
     private val _error = MutableLiveData<String>()
 
@@ -32,9 +31,8 @@ class EmployeesListViewModel @Inject constructor(val usecase: EmployeesUsecase) 
 
     private fun getEmployeesList() {
         viewModelScope.launch {
-            val result = usecase.getEmployeesList()
 
-            when(result) {
+            when(val result = usecase.getEmployeesList()) {
                 is ResultState.Success -> {
                     _employees.value = (result.data as Employees).employees
                     _error.value = ""

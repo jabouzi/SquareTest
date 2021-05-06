@@ -1,5 +1,6 @@
 package com.skanderjabouzi.squaretest.presentation
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import coil.transform.CircleCropTransformation
 import com.skanderjabouzi.squaretest.R
 import com.skanderjabouzi.squaretest.data.model.Employee
 import com.skanderjabouzi.squaretest.databinding.EmployeesListItemBinding
+import okhttp3.internal.format
 import javax.inject.Inject
 
 class EmployeesListAdapter @Inject constructor() :
@@ -17,13 +19,16 @@ class EmployeesListAdapter @Inject constructor() :
 
     private var employees = mutableListOf<Employee>()
     private lateinit var imageLoader: ImageLoader
-    lateinit var itemBinding: EmployeesListItemBinding
+    private lateinit var itemBinding: EmployeesListItemBinding
 
-    inner class EmployeesViewHolder(val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class EmployeesViewHolder(private val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(employee: Employee) {
+            val context = itemBinding.root.context
             itemBinding.fullName.text = employee.full_name
             itemBinding.biography.text = employee.biography
-            itemBinding.contact.text = "${employee.phone_number} - ${employee.email_address}"
+            itemBinding.contact.text = format(context.getString(R.string.contact_text),
+                employee.phone_number, employee.email_address
+            )
             itemBinding.team.text = employee.team
             itemBinding.type.text = employee.employee_type
             itemBinding.image.load(employee.photo_url_small) {

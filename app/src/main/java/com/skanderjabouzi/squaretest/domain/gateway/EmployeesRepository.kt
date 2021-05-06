@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class EmployeesRepository @Inject constructor() {
 
-    @set:Inject var retrofitClient: RetrofitClient = App.INSTANCE.appComponent.getRetrofitClient()
+    @set:Inject private var retrofitClient: RetrofitClient = App.INSTANCE.appComponent.getRetrofitClient()
 
     suspend fun getEmployeesList(): Response<Employees> = retrofitClient.getEmployees()
 }
