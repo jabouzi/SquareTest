@@ -45,7 +45,7 @@ class EmployeesRobot {
 
     fun scrollEmployeesListTo(item: Int) {
         onView(withId(R.id.employeesRecyclerView))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(item));
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(item))
     }
 
     fun checkHasText(id: Int, text: String) {

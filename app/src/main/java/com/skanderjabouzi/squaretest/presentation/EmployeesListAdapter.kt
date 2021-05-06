@@ -1,6 +1,5 @@
 package com.skanderjabouzi.squaretest.presentation
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,19 +18,20 @@ class EmployeesListAdapter @Inject constructor() :
 
     private var employees = mutableListOf<Employee>()
     private lateinit var imageLoader: ImageLoader
-    private lateinit var itemBinding: EmployeesListItemBinding
+    lateinit var itemBinding: EmployeesListItemBinding
+        private set
 
-    inner class EmployeesViewHolder(private val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class EmployeesViewHolder(val itemBinding: EmployeesListItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(employee: Employee) {
             val context = itemBinding.root.context
-            itemBinding.fullName.text = employee.full_name
+            itemBinding.fullName.text = employee.fullName
             itemBinding.biography.text = employee.biography
             itemBinding.contact.text = format(context.getString(R.string.contact_text),
-                employee.phone_number, employee.email_address
+                employee.phoneNumber, employee.emailAddress
             )
             itemBinding.team.text = employee.team
-            itemBinding.type.text = employee.employee_type
-            itemBinding.image.load(employee.photo_url_small) {
+            itemBinding.type.text = employee.employeeType
+            itemBinding.image.load(employee.photoUrlSmall) {
                 crossfade(true)
                 placeholder(R.drawable.placeholder)
                 error(R.drawable.placeholder)

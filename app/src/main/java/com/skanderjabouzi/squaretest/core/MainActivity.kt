@@ -2,10 +2,9 @@ package com.skanderjabouzi.squaretest.core
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.skanderjabouzi.squaretest.R
 
@@ -21,7 +20,9 @@ class MainActivity : AppCompatActivity() {
         navigationController = navHostFragment.navController
     }
 
-    override fun onBackPressed() {}
+    override fun onBackPressed() {
+    /*disable backpress on the main activity */
+    }
 
     companion object {
         fun getIntent(context: Context): Intent {
